@@ -18,13 +18,13 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 import window
 from window import entryUser, modify
 
-
 import time
 from email.header import decode_header
 import poplib
 from email.parser import Parser
 from email.utils import parseaddr
 from bs4 import BeautifulSoup
+
 
 class Ui_Main(object):
     def __init__(self):
@@ -268,15 +268,17 @@ class Ui_Main(object):
 
         # 如果存放邮件的目录不存在，先建立目录
         if not os.path.exists('./file/email/' + window.id):
-            os.mkdir('./file/email/'+window.id)
+            os.mkdir('./file/email/' + window.id)
 
         # 判断距离上次读取的间隔是否大于12小时
         if os.path.exists('./personal/last.txt'):
-            f = open('./peronal/last.txt', 'r')
+            f = open('./personal/last.txt', 'r')
             last = eval(f.readline())
-            print(last)
             now = time.time()
-            if((now-last)/3600>12):
+            print(now)
+            print(last)
+            print((now-last)/3600)
+            if ((now - last) / 3600 > 12):
                 self.getEmail()
         else:
             f = open('./personal/last.txt', 'w')
@@ -288,10 +290,9 @@ class Ui_Main(object):
 
         # 进行垃圾邮件分类
 
-
         # 初始化self.good和self.bad
-        # self.initGood()
-        # self.initBad()
+        self.initGood()
+        self.initBad()
 
         self.retranslateUi(Main)
         self.stackedWidget.setCurrentIndex(0)
@@ -370,8 +371,8 @@ class Ui_Main(object):
         goodPath = "./file/email/" + window.id + "/good/"
         fileList = os.listdir(goodPath)
         for x in fileList:
-            print(goodPath+x)
-            self.good.append(goodPath+x)
+            print(goodPath + x)
+            self.good.append(goodPath + x)
 
     # 初始化self.bad
     def initBad(self):
@@ -379,8 +380,7 @@ class Ui_Main(object):
         badPath = "./file/email/" + window.id + "/bad/"
         fileList = os.listdir(badPath)
         for x in fileList:
-            self.bad.append(badPath+x)
-
+            self.bad.append(badPath + x)
 
     # 垃圾箱槽函数
     def PB3(self):
@@ -456,7 +456,7 @@ class Ui_Main(object):
         rsp, msg_list, rsp_siz = server.list()
         # 循环遍历每个邮件
         for i in range(0, len(msg_list)):
-            filename = "邮件%d.txt" % i
+            filename = './file/email/'+window.id+'/邮件%d.txt' % i
             file = open(filename, 'w', encoding='utf-8')
             print("%d==================" % i)
             # 获取一封邮件，索引号从1开始
@@ -471,6 +471,7 @@ class Ui_Main(object):
             self.print_info(msg, file)
             file.close()
         server.quit()
+
     # 爬邮件子函数
     def print_info(self, msg, file, indent=0):
         if indent == 0:
@@ -481,7 +482,8 @@ class Ui_Main(object):
                         time3 = msg.get("Date").split('+')[0]
                         time2 = time3.split('-')[0]
                         time1 = time.strptime(time2, '%a, %d %b %Y %H:%M:%S ')
-                        file.write("时间：%d年%d月%d日 %d:%d:%d\n" % (time1.tm_year, time1.tm_mon, time1.tm_mday, time1.tm_hour, time1.tm_min, time1.tm_sec))
+                        file.write("时间：%d年%d月%d日 %d:%d:%d\n" % (
+                        time1.tm_year, time1.tm_mon, time1.tm_mday, time1.tm_hour, time1.tm_min, time1.tm_sec))
                         break
                     elif header == 'Subject':
                         value = self.decode_str(value)
@@ -520,15 +522,17 @@ class Ui_Main(object):
             else:
                 filename = msg.get_filename()
                 if self.decode_str(filename):
-                    file.write('Attachment: %s' % ( self.decode_str(filename)))
+                    file.write('Attachment: %s' % (self.decode_str(filename)))
+
     # 爬邮件子函数
-    def decode_str(self,s):
+    def decode_str(self, s):
         value, charset = decode_header(s)[0]
         if charset:
             value = value.decode(charset)
         return value
+
     # 爬邮件子函数
-    def guess_charset(self,msg):
+    def guess_charset(self, msg):
         charset = msg.get_charset()
         if charset is None:
             content_type = msg.get('Content-Type', '').lower()
@@ -536,6 +540,11 @@ class Ui_Main(object):
             if pos >= 0:
                 charset = content_type[pos + 8:].split(';')[0]
         return charset
+
+    # 依次处理每个邮件
+    def handleEmails(self):
+
+        pass
 
     # 垃圾邮件识别 path是待识别文件的路径 返回-1代表是垃圾邮件，返回1代表是正常邮件
     def judgeEmail(self, path):
