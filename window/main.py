@@ -558,11 +558,11 @@ class Ui_Main(object):
             index = file_str.find("Text")
             text = file_str[index+6:]
         # 加载停用词
-        with open('./stopwords.txt', encoding='utf8') as file:
+        with open('./spam_detection/stopwords.txt', encoding='utf8') as file:
             file_str = file.read()
             stopword_list = file_str.split('\n')
         # 加载训练好的逻辑回归模型参数
-        with open('all_model.pickle', 'rb') as file:
+        with open('./spam_detection/all_model.pickle', 'rb') as file:
             model_para = pickle.load(file)
             cv = model_para['CountVectorizer']
             tfidf = model_para['TfidfTransformer']
