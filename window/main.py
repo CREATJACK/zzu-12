@@ -279,12 +279,13 @@ class Ui_Main(object):
 
         # 判断距离上次读取的间隔是否大于12小时
         if os.path.exists('./personal/last.txt'):
-            f = open('./peronal/last.txt', 'r')
+            f = open('./personal/last.txt', 'r')
             last = eval(f.readline())
             print(last)
             now = time.time()
             if((now-last)/3600>12):
                 self.getEmail()
+                self.handleEmails()
         else:
             f = open('./personal/last.txt', 'w')
             now = time.time()
@@ -292,9 +293,7 @@ class Ui_Main(object):
             f.flush()
             f.close()
             self.getEmail()
-
-        # 进行垃圾邮件分类
-
+            self.handleEmails()
 
         # 初始化self.good和self.bad
         # self.initGood()
@@ -463,7 +462,7 @@ class Ui_Main(object):
         rsp, msg_list, rsp_siz = server.list()
         # 循环遍历每个邮件
         for i in range(0, len(msg_list)):
-            filename = "邮件%d.txt" % i
+            filename = './file/email/'+window.id+'/邮件%d.txt' % i
             file = open(filename, 'w', encoding='utf-8')
             print("%d==================" % i)
             # 获取一封邮件，索引号从1开始
@@ -543,6 +542,13 @@ class Ui_Main(object):
             if pos >= 0:
                 charset = content_type[pos + 8:].split(';')[0]
         return charset
+
+    # 依次处理每一封邮件，判断其是否是垃圾邮件
+    def handleEmails(self):
+        filePath = './file/email/'+window.id+"/"
+        allFile = os.listdir(filePath)
+        for x in allFile:
+            print(x)
 
     # 垃圾邮件识别 path是待识别文件的路径 返回-1代表是垃圾邮件，返回1代表是正常邮件
     def judgeEmail(self, path):
