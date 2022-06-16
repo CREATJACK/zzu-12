@@ -238,7 +238,6 @@ class Ui_Form(object):
         id = self.lineEdit_4.text()
         password = self.lineEdit_5.text()
         result = selectUser(id, password)
-        print(result)
         if result == -1:
             self.d = QtWidgets.QDialog()
             selfd_ui = Ui_Dialog()
