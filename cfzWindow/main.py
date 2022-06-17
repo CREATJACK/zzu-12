@@ -301,8 +301,9 @@ class Ui_Main(object):
             f.write(str(now))
             f.flush()
             f.close()
-            self.getEmail()
-            self.handleEmails()
+            p = threading.Thread(target=self.handle_email_tread)
+            p.setDaemon(True)
+            p.start()
 
         # 初始化self.good和self.bad
         self.initGood()
