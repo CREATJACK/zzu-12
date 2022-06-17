@@ -50,6 +50,14 @@ def getInformation():
         return None
     return result[0]
 
+# 获取用户的密码
+def getPassword():
+    sql = "select password from user where id='{}'".format(window.id)
+    cursor.execute(sql)
+    result = cursor.fetchall()
+    if result == ():
+        return None
+    return result[0][0]
 
 # 获取头像
 def getHead():

@@ -10,6 +10,11 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+import core.database
+import window
+from face_detect.face_detect import detect
+from window.main import Ui_Main
+
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -35,6 +40,7 @@ class Ui_Form(object):
         self.pushButton_3.setGeometry(QtCore.QRect(690, 240, 121, 61))
         self.pushButton_3.setObjectName("pushButton_3")
 
+        self.Form = Form
         self.pushButton.clicked.connect(self.pB)
         self.pushButton_2.clicked.connect(self.pB2)
         self.pushButton_3.clicked.connect(self.pB3)
@@ -52,11 +58,29 @@ class Ui_Form(object):
     # 开始识别按钮
     def pB(self):
         print("开始进行人脸识别")
+        my_scan_face = detect(name='')  # 建立人脸识别类，此处还需互斥控制，暂时不做考虑
+        id = my_scan_face.scan_face(self)  # 得到当前人脸特定的id，0为未识别出已录入的人脸
+        if id != 0:
+            self.scan_name = my_scan_face.id_dict[id]  # 得到对应id的名字
+            print("your namne is :"+self.scan_name)
+            self.label_2.setText("欢迎你："+self.scan_name)
+        else:
+            self.label_2.setText("没找到已注册的用户")
+            print("没找到已注册的用户")
+
+        self.label.setStyleSheet("background-color: black")
 
     # 确定按钮，进入主界面:
     def pB2(self):
-        pass
+        window.id = self.scan_name
+        window.password = core.database.getPassword()
+        window.main = QtWidgets.QWidget()
+        w_ui = Ui_Main()
+        w_ui.setupUi(window.main)
+        w_ui.label.show()
+        window.main.show()
+        self.Form.close()
 
     # 重试按钮，人脸识别失败时再次进行人脸识别
     def pB3(self):
-        pass
+        self.pB()

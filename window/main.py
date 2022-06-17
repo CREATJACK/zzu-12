@@ -22,6 +22,7 @@ import jieba
 from PyQt5 import QtCore, QtGui, QtWidgets
 from bs4 import BeautifulSoup
 
+import core.database
 import window
 from window import entryUser, modify
 
@@ -253,7 +254,6 @@ class Ui_Main(object):
                                          "QPushButton::pressed{ background: #3C79F2; border-color: #11505C; font-weight: bold; font-family:Microsoft YaHei; }")
         self.pushButton_11.setObjectName("pushButton_11")
 
-
         self.Main = Main
         face = QtGui.QPixmap("./personal/face.png")
         self.label.setPixmap(face)
@@ -273,11 +273,9 @@ class Ui_Main(object):
         self.listWidget.doubleClicked.connect(self.dc_listWidget)
         self.listWidget_2.doubleClicked.connect(self.dc_listWidget2)
 
-
         # 如果存放邮件的目录不存在，先建立目录
         if not os.path.exists('./file/email/' + window.id):
             os.mkdir('./file/email/' + window.id)
-
 
         # 判断距离上次读取的间隔是否大于12小时
         if os.path.exists('./personal/last.txt'):
@@ -299,6 +297,7 @@ class Ui_Main(object):
         # 初始化self.good和self.bad
         self.initGood()
         self.initBad()
+
 
         self.retranslateUi(Main)
         self.stackedWidget.setCurrentIndex(1)
@@ -433,15 +432,14 @@ class Ui_Main(object):
 
     def PB7(self):
         tempPath, tempName = os.path.split(window.currentFile)
-        shutil.move(window.currentFile, './file/email/'+window.id+"/bad/"+tempName)
+        shutil.move(window.currentFile, './file/email/' + window.id + "/bad/" + tempName)
         QtWidgets.QMessageBox.information(self.Main,
-                              "",
-                              "移动成功",
-                              QtWidgets.QMessageBox.Yes)
+                                          "",
+                                          "移动成功",
+                                          QtWidgets.QMessageBox.Yes)
 
     def PB8(self):
         self.PB2()
-
 
     def PB9(self):
         tempPath, tempName = os.path.split(window.currentFile)
@@ -457,11 +455,10 @@ class Ui_Main(object):
     def PB11(self):
         pass
 
-
     # 初始化self.good
     def initGood(self):
         # 先把self.good清空
-        self.good=[]
+        self.good = []
         # 非垃圾邮件的目录
         goodPath = "./file/email/" + window.id + "/good/"
         fileList = os.listdir(goodPath)
@@ -471,7 +468,7 @@ class Ui_Main(object):
     # 初始化self.bad
     def initBad(self):
         # 先把self.bad清空
-        self.bad=[]
+        self.bad = []
         # 垃圾邮件的目录
         badPath = "./file/email/" + window.id + "/bad/"
         fileList = os.listdir(badPath)
@@ -489,9 +486,9 @@ class Ui_Main(object):
         goodList = os.listdir(goodPath)
         badList = os.listdir(badPath)
         for e in goodList:
-            os.remove(goodPath+e)
+            os.remove(goodPath + e)
         for e in badList:
-            os.remove(badPath+e)
+            os.remove(badPath + e)
         user = window.id
         password = window.password
         pop3_server = 'pop.qq.com'
