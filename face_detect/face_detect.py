@@ -216,11 +216,12 @@ class detect:
             i += 1
 
             yml = pth+'face_cache/'+str(i) + ".yml"   # yml = str(i) + ".yml"
-            print("\n本次:" + yml)  # 调试信息
+            #print("\n本次:" + yml)  # 调试信息
             self.recognizer.read(yml)
 
             ave_poss = 0
-            for times in range(10):  # 每个识别器扫描十遍
+            scantimes = 100
+            for times in range(scantimes):  # 每个识别器扫描十遍
                 times += 1
                 cur_poss = 0
 
@@ -279,7 +280,7 @@ class detect:
                     # 展示结果
                     # cv2.imshow('camera', self.img)
 
-                    print("conf=" + str(conf), end="\t")
+                    #print("conf=" + str(conf), end="\t")
                     if 15 > conf > 0:
                         cur_poss = 1  # 表示可以识别
                     elif 60 > conf > 35:
@@ -298,7 +299,7 @@ class detect:
                 window.label.setPixmap(jpg_out)
                 ave_poss += cur_poss
 
-            if ave_poss >= 5:  # 有一半以上识别说明可行则返回
+            if ave_poss >= scantimes/2:  # 有一半以上识别说明可行则返回
                 return i
 
         return 0  # 全部过一遍还没识别出说明无法识别

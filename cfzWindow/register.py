@@ -193,7 +193,7 @@ class Ui_Form(object):
         self.fWidget = QtWidgets.QWidget()
         face = cfzWindow.face.Ui_Form()
         face.setupUi(self.fWidget)
-        face.label_2.setText("哈哈哈")
+        face.label_2.setText("欢迎使用人脸识别登陆系统")
         self.fWidget.father = self.Form
         self.fWidget.show()
 

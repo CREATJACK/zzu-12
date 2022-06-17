@@ -51,6 +51,8 @@ class Ui_Form(object):
         self.pushButton_3.clicked.connect(Form.pB3)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
+        self.scan_name = None
+
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))
@@ -67,14 +69,19 @@ class Ui_Form(object):
         if id != 0:
             self.scan_name = my_scan_face.id_dict[id]  # 得到对应id的名字
             print("your namne is :"+self.scan_name)
-            self.label_2.setText("欢迎你："+self.scan_name)
+            self.label_2.setText("欢迎你："+self.scan_name+",请点击确认继续")
         else:
+            self.scan_name = None
             self.label_2.setText("没找到已注册的用户")
             print("没找到已注册的用户")
+            self.label_2.setText("请点击确认退出，或点击重试以重新扫描人脸")
 
 
     # 确定按钮，进入主界面:
     def pB2(self):
+        if self.scan_name == None:
+            self.Form.close()
+            return 0
         cfzWindow.id = self.scan_name
         cfzWindow.password = core.database.getPassword()
         cfzWindow.main = QtWidgets.QWidget()
@@ -83,7 +90,7 @@ class Ui_Form(object):
         w_ui.label.show()
         cfzWindow.main.show()
         self.Form.close()
-        self.father.close()
+        self.Form.father.close()
 
     # 重试按钮，人脸识别失败时再次进行人脸识别
     def pB3(self):
