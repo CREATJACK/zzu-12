@@ -450,6 +450,7 @@ class Ui_Main(object):
                                           "移动成功",
                                           QtWidgets.QMessageBox.Yes)
 
+
     def PB8(self):
         self.PB2()
 
@@ -637,6 +638,7 @@ class Ui_Main(object):
 
     # 依次处理每一封邮件，判断其是否是垃圾邮件
     def handleEmails(self):
+        print("--------开始进行垃圾邮件识别--------")
         filePath = './file/email/' + cfzWindow.id + "/"
         allFile = os.listdir(filePath)
         for x in allFile:
