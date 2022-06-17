@@ -253,6 +253,8 @@ class Ui_Main(object):
                                          "QPushButton::pressed{ background: #3C79F2; border-color: #11505C; font-weight: bold; font-family:Microsoft YaHei; }")
         self.pushButton_11.setObjectName("pushButton_11")
 
+
+        self.Main = Main
         face = QtGui.QPixmap("./personal/face.png")
         self.label.setPixmap(face)
         self.label_2.setText("当前用户: " + window.id)
@@ -271,16 +273,18 @@ class Ui_Main(object):
         self.listWidget.doubleClicked.connect(self.dc_listWidget)
         self.listWidget_2.doubleClicked.connect(self.dc_listWidget2)
 
+
         # 如果存放邮件的目录不存在，先建立目录
         if not os.path.exists('./file/email/' + window.id):
             os.mkdir('./file/email/' + window.id)
+
 
         # 判断距离上次读取的间隔是否大于12小时
         if os.path.exists('./personal/last.txt'):
             f = open('./personal/last.txt', 'r')
             last = eval(f.readline())
             now = time.time()
-            if (now - last) / 3600 > 12:
+            if (now - last) / 3600000 > 12:
                 self.getEmail()  # 调用self.getEmail()的地方，也需要调用self.handleEmails()
                 self.handleEmails()
         else:
@@ -333,6 +337,7 @@ class Ui_Main(object):
     def dc_listWidget(self, e):
         b = self.listWidget.selectedIndexes()
         target = b[0].row()
+        window.currentFile = self.good[target]
         f = open(self.good[target], 'r', encoding='utf-8')
         content = f.read()
         self.textBrowser.setText(content)
@@ -342,6 +347,7 @@ class Ui_Main(object):
     def dc_listWidget2(self, e):
         b = self.listWidget_2.selectedIndexes()
         target = b[0].row()
+        window.currentFile = self.bad[target]
         f = open(self.bad[target], 'r', encoding='utf-8')
         content = f.read()
         self.textBrowser_2.setText(content)
@@ -357,6 +363,7 @@ class Ui_Main(object):
 
     # 收件箱槽函数
     def PB2(self):
+        self.initGood()
         self.stackedWidget.setCurrentIndex(0)
         # 加载前先删除上一次列出的数据
         count = self.listWidget.count()
@@ -372,6 +379,7 @@ class Ui_Main(object):
 
     # 垃圾箱槽函数
     def PB3(self):
+        self.initBad()
         self.stackedWidget.setCurrentIndex(1)
         # 加载前先删除上一次列出的数据
         count = self.listWidget_2.count()
@@ -424,16 +432,27 @@ class Ui_Main(object):
             server.quit()
 
     def PB7(self):
-        pass
+        tempPath, tempName = os.path.split(window.currentFile)
+        shutil.move(window.currentFile, './file/email/'+window.id+"/bad/"+tempName)
+        QtWidgets.QMessageBox.information(self.Main,
+                              "",
+                              "移动成功",
+                              QtWidgets.QMessageBox.Yes)
 
     def PB8(self):
-        self.stackedWidget.setCurrentIndex(0)
+        self.PB2()
+
 
     def PB9(self):
-        pass
+        tempPath, tempName = os.path.split(window.currentFile)
+        shutil.move(window.currentFile, './file/email/' + window.id + "/good/" + tempName)
+        QtWidgets.QMessageBox.information(self.Main,
+                                          "",
+                                          "移动成功",
+                                          QtWidgets.QMessageBox.Yes)
 
     def PB10(self):
-        self.stackedWidget.setCurrentIndex(1)
+        self.PB3()
 
     def PB11(self):
         pass
@@ -441,6 +460,8 @@ class Ui_Main(object):
 
     # 初始化self.good
     def initGood(self):
+        # 先把self.good清空
+        self.good=[]
         # 非垃圾邮件的目录
         goodPath = "./file/email/" + window.id + "/good/"
         fileList = os.listdir(goodPath)
@@ -449,6 +470,8 @@ class Ui_Main(object):
 
     # 初始化self.bad
     def initBad(self):
+        # 先把self.bad清空
+        self.bad=[]
         # 垃圾邮件的目录
         badPath = "./file/email/" + window.id + "/bad/"
         fileList = os.listdir(badPath)
@@ -466,10 +489,9 @@ class Ui_Main(object):
         goodList = os.listdir(goodPath)
         badList = os.listdir(badPath)
         for e in goodList:
-            os.remove(e)
+            os.remove(goodPath+e)
         for e in badList:
-            os.remove(e)
-
+            os.remove(badPath+e)
         user = window.id
         password = window.password
         pop3_server = 'pop.qq.com'

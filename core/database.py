@@ -5,7 +5,7 @@ import window
 
 con = pymysql.connect(host='112.124.17.13', user='xiaoming', password='123456', database='shengchanshixi',
                       charset='utf8')
-print("数据库连接成功")
+
 # 创建游标
 cursor = con.cursor()
 
