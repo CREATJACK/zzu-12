@@ -272,10 +272,6 @@ class detect:
 
                     # 展示结果
                     # cv2.imshow('camera', self.img)
-                    img2 = cv2.cvtColor(self.img,cv2.COLOR_BGR2RGB)
-                    _image = QtGui.QImage(img2[:], img2.shape[1], img2.shape[0], img2.shape[1] * 3, QtGui.QImage.Format_RGB888) #pyqt5转换成自己能放的图片格式
-                    jpg_out = QtGui.QPixmap(_image).scaled(window.face.label.width(), window.face.label.height()) #设置图片大小
-                    window.face.label.setPixmap(jpg_out)
 
                     print("conf=" + str(conf), end="\t")
                     if 15 > conf > 0:
@@ -290,7 +286,10 @@ class detect:
                     # cam.release()  # 释放资源
                     cv2.destroyAllWindows()
                     break
-
+                img2 = cv2.cvtColor(self.img,cv2.COLOR_BGR2RGB)
+                _image = QtGui.QImage(img2[:], img2.shape[1], img2.shape[0], img2.shape[1] * 3, QtGui.QImage.Format_RGB888) #pyqt5转换成自己能放的图片格式
+                jpg_out = QtGui.QPixmap(_image).scaled(window.label.width(), window.label.height()) #设置图片大小
+                window.label.setPixmap(jpg_out)
                 ave_poss += cur_poss
 
             if ave_poss >= 5:  # 有一半以上识别说明可行则返回

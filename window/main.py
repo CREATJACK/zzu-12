@@ -521,25 +521,41 @@ class Ui_Main(object):
     # 爬邮件子函数
     def print_info(self, msg, file, indent=0):
         if indent == 0:
+            sub = ''
+            shoujianren = ''
+            fajianren = ''
             for header in ['From', 'To', 'Subject', 'Date']:
                 value = msg.get(header, '')
                 if value:
                     if header == 'Date':
+                        time4 = msg.get("Date") + '\n'
                         time3 = msg.get("Date").split('+')[0]
                         time2 = time3.split('-')[0]
+                        # print("time2===============",time2)
                         time1 = time.strptime(time2, '%a, %d %b %Y %H:%M:%S ')
-                        file.write("时间：%d年%d月%d日 %d:%d:%d\n" % (
-                            time1.tm_year, time1.tm_mon, time1.tm_mday, time1.tm_hour, time1.tm_min, time1.tm_sec))
+                        # print(time4)
+                        file.write(time4)
+                        # file.write("时间：%d年%d月%d日 %d:%d:%d\n" % (time1.tm_year, time1.tm_mon, time1.tm_mday, time1.tm_hour, time1.tm_min, time1.tm_sec))
                         break
                     elif header == 'Subject':
                         value = self.decode_str(value)
-                        file.write('主题: %s\n' % value)
+                        sub = '主题: %s\n' % value
 
+                    elif header == 'From':
+                        hdr, addr = parseaddr(value)
+                        name = self.decode_str(hdr)
+                        value = u'%s <%s>' % (name, addr)
+                        # print('%s%s: %s' % ('  ' * indent, header, value))
+                        fajianren = '%s: %s\n' % (header, value)
                     else:
                         hdr, addr = parseaddr(value)
                         name = self.decode_str(hdr)
                         value = u'%s <%s>' % (name, addr)
-                        file.write('%s: %s\n' % (header, value))
+                        # print('%s%s: %s' % ('  ' * indent, header, value))
+                        shoujianren = '%s: %s\n' % (header, value)
+            file.write(fajianren)
+            file.write(shoujianren)
+            file.write(sub)
         if msg.is_multipart():
 
             parts = msg.get_payload()
