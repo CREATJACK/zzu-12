@@ -68,10 +68,15 @@ class EmailUtil:
     # 示例dates=['2022-06-14 09:47:56+08:00', '2022-06-14 09:48:06+08:00']
     def movetoINBOX(self, filePath):
         # 切换工作文件夹
+        print("运行到了这里")
         self.mailbox.folder.set('Junk')
+        print("运行到了这里")
+        print(filePath)
         date = self.date_by_fileName(filePath)
+        print(date)
         for it in self.mailbox.fetch():
             if date == it.date_str:  # (str)(it.date)形式示例：2022-06-14 09:48:06+08:00
+                print("找到了目标文件")
                 uid = it.uid  # 获取该邮件的uid
                 # MOVE操作：将当前选择的邮件移动到指定文件夹中
                 self.mailbox.move(uid, 'INBOX')  # 根据邮件参数uid进行移动

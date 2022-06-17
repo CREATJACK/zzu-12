@@ -33,9 +33,7 @@ class Ui_Main(object):
         self.good = []
         self.bad = []
         self.emailUtil = EmailUtil('imap.qq.com', '993')
-        print("运行到了这里")
-        self.emailUtil.login(cfzWindow.password, cfzWindow.id)
-        print("运行到了这里")
+        self.emailUtil.login(cfzWindow.id, 'fduxnixyebocbgaf')
 
 
     def setupUi(self, Main):
@@ -282,6 +280,10 @@ class Ui_Main(object):
         # 如果存放邮件的目录不存在，先建立目录
         if not os.path.exists('./file/email/' + cfzWindow.id):
             os.mkdir('./file/email/' + cfzWindow.id)
+        if not os.path.exists('./file/email/'+cfzWindow.id+'/good/'):
+            os.mkdir('./file/email/'+cfzWindow.id+'/good/')
+        if not os.path.exists('./file/email/'+cfzWindow.id+'/bad/'):
+            os.mkdir('./file/email/'+cfzWindow.id+'/bad/')
 
         # 判断距离上次读取的间隔是否大于12小时
         if os.path.exists('./personal/last.txt'):
@@ -439,9 +441,10 @@ class Ui_Main(object):
 
     def PB7(self):
         tempPath, tempName = os.path.split(cfzWindow.currentFile)
-        shutil.move(cfzWindow.currentFile, './file/email/' + cfzWindow.id + "/bad/" + tempName)
         # qq邮箱服务器端移动
         self.emailUtil.movetoJunk(cfzWindow.currentFile)
+        # 本地移动
+        shutil.move(cfzWindow.currentFile, './file/email/' + cfzWindow.id + "/bad/" + tempName)
         QtWidgets.QMessageBox.information(self.Main,
                                           "",
                                           "移动成功",
@@ -452,10 +455,10 @@ class Ui_Main(object):
 
     def PB9(self):
         tempPath, tempName = os.path.split(cfzWindow.currentFile)
-        # 本地移动
-        shutil.move(cfzWindow.currentFile, './file/email/' + cfzWindow.id + "/good/" + tempName)
         # qq邮箱服务器端移动
         self.emailUtil.movetoINBOX(cfzWindow.currentFile)
+        # 本地移动
+        shutil.move(cfzWindow.currentFile, './file/email/' + cfzWindow.id + "/good/" + tempName)
         QtWidgets.QMessageBox.information(self.Main,
                                           "",
                                           "移动成功",
