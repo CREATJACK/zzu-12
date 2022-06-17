@@ -68,7 +68,7 @@ class Ui_Form(object):
             self.label_2.setText("没找到已注册的用户")
             print("没找到已注册的用户")
 
-        self.label.setStyleSheet("background-color: black")
+        #self.label.setStyleSheet("background-color: black")
 
     # 确定按钮，进入主界面:
     def pB2(self):
