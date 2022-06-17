@@ -25,12 +25,18 @@ from bs4 import BeautifulSoup
 import core.database
 import cfzWindow
 from cfzWindow import  modify, enterUser
+from cfzWindow.moveMail import EmailUtil
 
 
 class Ui_Main(object):
     def __init__(self):
         self.good = []
         self.bad = []
+        self.emailUtil = EmailUtil('imap.qq.com', '993')
+        print("运行到了这里")
+        self.emailUtil.login(cfzWindow.password, cfzWindow.id)
+        print("运行到了这里")
+
 
     def setupUi(self, Main):
         Main.setObjectName("Main")
@@ -434,6 +440,8 @@ class Ui_Main(object):
     def PB7(self):
         tempPath, tempName = os.path.split(cfzWindow.currentFile)
         shutil.move(cfzWindow.currentFile, './file/email/' + cfzWindow.id + "/bad/" + tempName)
+        # qq邮箱服务器端移动
+        self.emailUtil.movetoJunk(cfzWindow.currentFile)
         QtWidgets.QMessageBox.information(self.Main,
                                           "",
                                           "移动成功",
@@ -444,7 +452,10 @@ class Ui_Main(object):
 
     def PB9(self):
         tempPath, tempName = os.path.split(cfzWindow.currentFile)
+        # 本地移动
         shutil.move(cfzWindow.currentFile, './file/email/' + cfzWindow.id + "/good/" + tempName)
+        # qq邮箱服务器端移动
+        self.emailUtil.movetoINBOX(cfzWindow.currentFile)
         QtWidgets.QMessageBox.information(self.Main,
                                           "",
                                           "移动成功",
@@ -454,7 +465,24 @@ class Ui_Main(object):
         self.PB3()
 
     def PB11(self):
-        pass
+        # 收取前先重置self.good和self.bad
+        self.good=[]
+        self.bad=[]
+        print("手动收取")
+        goodPath = './file/email/'+cfzWindow.id+"/good/"
+        badPath = './file/email/'+cfzWindow.id+'/bad/'
+        goodList = os.listdir(goodPath)
+        badList = os.listdir(badPath)
+        for e in goodList:
+            os.remove(goodPath+e)
+        for e in badList:
+            os.remove(badPath+e)
+        # 重新收取邮件
+        self.getEmail()
+        # 进行垃圾邮件识别
+        self.handleEmails()
+
+
 
     # 初始化self.good
     def initGood(self):
