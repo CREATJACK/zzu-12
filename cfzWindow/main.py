@@ -13,6 +13,7 @@ import re
 import shutil
 import smtplib
 import time
+import threading
 from email.header import decode_header, Header
 from email.mime.text import MIMEText
 from email.parser import Parser
@@ -370,6 +371,7 @@ class Ui_Main(object):
 
     # 收件箱槽函数
     def PB2(self):
+        print("显示收件箱")#调试信息
         self.initGood()
         self.stackedWidget.setCurrentIndex(0)
         # 加载前先删除上一次列出的数据
@@ -386,6 +388,7 @@ class Ui_Main(object):
 
     # 垃圾箱槽函数
     def PB3(self):
+        print("显示垃圾箱")#调试信息
         self.initBad()
         self.stackedWidget.setCurrentIndex(1)
         # 加载前先删除上一次列出的数据
@@ -481,12 +484,20 @@ class Ui_Main(object):
             os.remove(goodPath+e)
         for e in badList:
             os.remove(badPath+e)
-        # 重新收取邮件
+
+        p = threading.Thread(target=self.handle_email_tread)
+        p.setDaemon(True)
+        p.start()
+
+        # # 重新收取邮件
+        # self.getEmail()
+        # # 进行垃圾邮件识别
+        # self.handleEmails()
+
+    def handle_email_tread(self):
         self.getEmail()
         # 进行垃圾邮件识别
         self.handleEmails()
-
-
 
     # 初始化self.good
     def initGood(self):
