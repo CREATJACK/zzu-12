@@ -23,8 +23,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from bs4 import BeautifulSoup
 
 import core.database
-import window
-from window import  modify, enterUser
+import cfzWindow
+from cfzWindow import  modify, enterUser
 
 
 class Ui_Main(object):
@@ -257,7 +257,7 @@ class Ui_Main(object):
         self.Main = Main
         face = QtGui.QPixmap("./personal/face.png")
         self.label.setPixmap(face)
-        self.label_2.setText("当前用户: " + window.id)
+        self.label_2.setText("当前用户: " + cfzWindow.id)
         Main.setStyleSheet("background-color: white")
         Main.PB1 = self.PB1
         Main.pB2 = self.PB2
@@ -274,8 +274,8 @@ class Ui_Main(object):
         self.listWidget_2.doubleClicked.connect(self.dc_listWidget2)
 
         # 如果存放邮件的目录不存在，先建立目录
-        if not os.path.exists('./file/email/' + window.id):
-            os.mkdir('./file/email/' + window.id)
+        if not os.path.exists('./file/email/' + cfzWindow.id):
+            os.mkdir('./file/email/' + cfzWindow.id)
 
         # 判断距离上次读取的间隔是否大于12小时
         if os.path.exists('./personal/last.txt'):
@@ -336,7 +336,7 @@ class Ui_Main(object):
     def dc_listWidget(self, e):
         b = self.listWidget.selectedIndexes()
         target = b[0].row()
-        window.currentFile = self.good[target]
+        cfzWindow.currentFile = self.good[target]
         f = open(self.good[target], 'r', encoding='utf-8')
         content = f.read()
         self.textBrowser.setText(content)
@@ -346,7 +346,7 @@ class Ui_Main(object):
     def dc_listWidget2(self, e):
         b = self.listWidget_2.selectedIndexes()
         target = b[0].row()
-        window.currentFile = self.bad[target]
+        cfzWindow.currentFile = self.bad[target]
         f = open(self.bad[target], 'r', encoding='utf-8')
         content = f.read()
         self.textBrowser_2.setText(content)
@@ -405,8 +405,8 @@ class Ui_Main(object):
 
 
     # 发送邮件的接口
-    # window.id: 发送者邮箱
-    # window.password: 发送者邮箱密码
+    # cfzWindow.id: 发送者邮箱
+    # cfzWindow.password: 发送者邮箱密码
     # self.lineEdit.text(): 接收者邮箱
     # self.lineEdit_2.text(): 发送者昵称
     # self.lineEdit_3.text(): 邮件主题
@@ -414,7 +414,7 @@ class Ui_Main(object):
     def PB6(self):
         try:
             msg = MIMEText(self.plainTextEdit.toPlainText(), 'plain', 'utf-8')
-            msg["From"] = formataddr([self.lineEdit_2.text(), window.id])
+            msg["From"] = formataddr([self.lineEdit_2.text(), cfzWindow.id])
             msg["To"] = Header(self.lineEdit.text())
 
             msg['Subject'] = Header(self.lineEdit_3.text(), 'utf-8')
@@ -422,8 +422,8 @@ class Ui_Main(object):
             smtp_server = "smtp.qq.com"
             server = smtplib.SMTP_SSL(smtp_server)
             server.connect(smtp_server, 465)
-            server.login(window.id, window.password)
-            server.sendmail(window.id, self.lineEdit.text(), msg.as_string())
+            server.login(cfzWindow.id, cfzWindow.password)
+            server.sendmail(cfzWindow.id, self.lineEdit.text(), msg.as_string())
             print("邮件发送成功")
         except smtplib.SMTPException as e:
             print(f"无法发送邮件, 失败原因{e}")
@@ -432,8 +432,8 @@ class Ui_Main(object):
             server.quit()
 
     def PB7(self):
-        tempPath, tempName = os.path.split(window.currentFile)
-        shutil.move(window.currentFile, './file/email/' + window.id + "/bad/" + tempName)
+        tempPath, tempName = os.path.split(cfzWindow.currentFile)
+        shutil.move(cfzWindow.currentFile, './file/email/' + cfzWindow.id + "/bad/" + tempName)
         QtWidgets.QMessageBox.information(self.Main,
                                           "",
                                           "移动成功",
@@ -443,8 +443,8 @@ class Ui_Main(object):
         self.PB2()
 
     def PB9(self):
-        tempPath, tempName = os.path.split(window.currentFile)
-        shutil.move(window.currentFile, './file/email/' + window.id + "/good/" + tempName)
+        tempPath, tempName = os.path.split(cfzWindow.currentFile)
+        shutil.move(cfzWindow.currentFile, './file/email/' + cfzWindow.id + "/good/" + tempName)
         QtWidgets.QMessageBox.information(self.Main,
                                           "",
                                           "移动成功",
@@ -461,7 +461,7 @@ class Ui_Main(object):
         # 先把self.good清空
         self.good = []
         # 非垃圾邮件的目录
-        goodPath = "./file/email/" + window.id + "/good/"
+        goodPath = "./file/email/" + cfzWindow.id + "/good/"
         fileList = os.listdir(goodPath)
         for x in fileList:
             self.good.append(goodPath + x)
@@ -471,17 +471,17 @@ class Ui_Main(object):
         # 先把self.bad清空
         self.bad = []
         # 垃圾邮件的目录
-        badPath = "./file/email/" + window.id + "/bad/"
+        badPath = "./file/email/" + cfzWindow.id + "/bad/"
         fileList = os.listdir(badPath)
         for x in fileList:
             self.bad.append(badPath + x)
 
     # 爬取邮件的槽函数，并存放到 ./file/email/用户id 目录下
-    # window.id: 发送者邮箱
-    # window.password: 发送者邮箱密码
+    # cfzWindow.id: 发送者邮箱
+    # cfzWindow.password: 发送者邮箱密码
     def getEmail(self):
         # 再次收取文件前，先把存放邮件目录中的所有文件删除掉
-        rootPath = './file/email/' + window.id + "/"
+        rootPath = './file/email/' + cfzWindow.id + "/"
         goodPath = rootPath + 'good/'
         badPath = rootPath + 'bad/'
         goodList = os.listdir(goodPath)
@@ -490,8 +490,8 @@ class Ui_Main(object):
             os.remove(goodPath + e)
         for e in badList:
             os.remove(badPath + e)
-        user = window.id
-        password = window.password
+        user = cfzWindow.id
+        password = cfzWindow.password
         pop3_server = 'pop.qq.com'
         # 连接到POP3服务器
         server = poplib.POP3(pop3_server)
@@ -503,7 +503,7 @@ class Ui_Main(object):
         rsp, msg_list, rsp_siz = server.list()
         # 循环遍历每个邮件
         for i in range(0, len(msg_list)):
-            filename = './file/email/' + window.id + '/邮件%d.txt' % i
+            filename = './file/email/' + cfzWindow.id + '/邮件%d.txt' % i
             file = open(filename, 'w', encoding='utf-8')
             print("%d==================" % i)
             # 获取一封邮件，索引号从1开始
@@ -606,7 +606,7 @@ class Ui_Main(object):
 
     # 依次处理每一封邮件，判断其是否是垃圾邮件
     def handleEmails(self):
-        filePath = './file/email/' + window.id + "/"
+        filePath = './file/email/' + cfzWindow.id + "/"
         allFile = os.listdir(filePath)
         for x in allFile:
             if os.path.isdir(filePath + x):

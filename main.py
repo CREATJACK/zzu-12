@@ -3,8 +3,8 @@
 
 import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow
-from window import register
-from window import log
+from cfzWindow import register
+from cfzWindow import log
 
 # 主程序入口
 if __name__ == "__main__":

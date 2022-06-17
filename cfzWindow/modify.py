@@ -10,9 +10,9 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-import window.main
+import cfzWindow.main
 from core.database import *
-from window.main import *
+from cfzWindow.main import *
 
 class Ui_Dialog(object):
     def __int__(self):

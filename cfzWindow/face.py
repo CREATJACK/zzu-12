@@ -11,9 +11,9 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 import core.database
-import window
+import cfzWindow
 from face_detect.face_detect import detect
-from window.main import Ui_Main
+from cfzWindow.main import Ui_Main
 
 
 class Ui_Form(object):
@@ -72,13 +72,13 @@ class Ui_Form(object):
 
     # 确定按钮，进入主界面:
     def pB2(self):
-        window.id = self.scan_name
-        window.password = core.database.getPassword()
-        window.main = QtWidgets.QWidget()
+        cfzWindow.id = self.scan_name
+        cfzWindow.password = core.database.getPassword()
+        cfzWindow.main = QtWidgets.QWidget()
         w_ui = Ui_Main()
-        w_ui.setupUi(window.main)
+        w_ui.setupUi(cfzWindow.main)
         w_ui.label.show()
-        window.main.show()
+        cfzWindow.main.show()
         self.Form.close()
 
     # 重试按钮，人脸识别失败时再次进行人脸识别

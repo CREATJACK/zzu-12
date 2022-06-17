@@ -10,10 +10,10 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-import window.face
+import cfzWindow.face
 from core.database import *
-from window.main import *
-from window.dialog import *
+from cfzWindow.main import *
+from cfzWindow.dialog import *
 from face_detect.face_detect import detect
 from PIL import Image, ImageTk
 import cv2
@@ -191,7 +191,7 @@ class Ui_Form(object):
         self.pushButton_3.setStyleSheet('border: 1px solid;')
         self.stackedWidget.setCurrentIndex(1)
         self.fWidget = QtWidgets.QWidget()
-        self.face = window.face.Ui_Form()
+        self.face = cfzWindow.face.Ui_Form()
         self.face.setupUi(self.fWidget)
         self.face.father= self.Form
         self.face.label_2.setText("哈哈哈")
@@ -229,8 +229,8 @@ class Ui_Form(object):
             selfd_ui.label.setText("登录失败!")
             self.d.show()
         else:
-            window.id = id
-            window.password = password
+            cfzWindow.id = id
+            cfzWindow.password = password
             if self.radioButton.isChecked():
                 file = open("./personal/individual.txt", 'w')
                 file.write(self.lineEdit_4.text())
@@ -243,7 +243,7 @@ class Ui_Form(object):
             self.w_ui.label.show()
             self.w.show()
             self.Form.close()
-            window.main = self.w
+            cfzWindow.main = self.w
 
     # 清空按钮的响应事件
     def pushButton5(self):

@@ -1,8 +1,7 @@
 import pymysql
+import cfzWindow
 
 # 连接数据库
-import window
-
 con = pymysql.connect(host='112.124.17.13', user='xiaoming', password='123456', database='shengchanshixi',
                       charset='utf8')
 
@@ -43,7 +42,7 @@ def isExistUser(id):
 
 # 获得用户的全部信息
 def getInformation():
-    sql = "select * from user where id='{}'".format(window.id)
+    sql = "select * from user where id='{}'".format(cfzWindow.id)
     cursor.execute(sql)
     result = cursor.fetchall()
     if result == ():
@@ -52,7 +51,7 @@ def getInformation():
 
 # 获取用户的密码
 def getPassword():
-    sql = "select password from user where id='{}'".format(window.id)
+    sql = "select password from user where id='{}'".format(cfzWindow.id)
     cursor.execute(sql)
     result = cursor.fetchall()
     if result == ():
@@ -61,7 +60,7 @@ def getPassword():
 
 # 获取头像
 def getHead():
-    sql = "select head from user where id='{}'".format(window.id)
+    sql = "select head from user where id='{}'".format(cfzWindow.id)
     cursor.execute(sql)
     result = cursor.fetchall()
     if result == ():
