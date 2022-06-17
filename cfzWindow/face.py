@@ -10,16 +10,13 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-import core.database
 import cfzWindow
-from face_detect.face_detect import detect
+import core
 from cfzWindow.main import Ui_Main
+from face_detect.face_detect import detect
 
 
 class Ui_Form(object):
-    def __init__(self):
-        self.father = None
-
     def setupUi(self, Form):
         Form.setObjectName("Form")
         Form.resize(823, 559)
@@ -44,11 +41,14 @@ class Ui_Form(object):
         self.pushButton_3.setObjectName("pushButton_3")
 
         self.Form = Form
-        self.pushButton.clicked.connect(self.pB)
-        self.pushButton_2.clicked.connect(self.pB2)
-        self.pushButton_3.clicked.connect(self.pB3)
+        Form.pB = self.pB
+        Form.pB2 = self.pB2
+        Form.pB3 = self.pB3
 
         self.retranslateUi(Form)
+        self.pushButton.clicked.connect(Form.pB)
+        self.pushButton_2.clicked.connect(Form.pB2)
+        self.pushButton_3.clicked.connect(Form.pB3)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def retranslateUi(self, Form):
@@ -57,6 +57,7 @@ class Ui_Form(object):
         self.pushButton.setText(_translate("Form", "开始识别"))
         self.pushButton_2.setText(_translate("Form", "确定"))
         self.pushButton_3.setText(_translate("Form", "重试"))
+
 
     # 开始识别按钮
     def pB(self):
@@ -71,7 +72,6 @@ class Ui_Form(object):
             self.label_2.setText("没找到已注册的用户")
             print("没找到已注册的用户")
 
-        #self.label.setStyleSheet("background-color: black")
 
     # 确定按钮，进入主界面:
     def pB2(self):

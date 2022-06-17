@@ -190,12 +190,6 @@ class Ui_Form(object):
         self.pushButton.setStyleSheet('border: 1px solid;')
         self.pushButton_3.setStyleSheet('border: 1px solid;')
         self.stackedWidget.setCurrentIndex(1)
-        # self.fWidget = QtWidgets.QWidget()
-        # self.face = cfzWindow.face.Ui_Form()
-        # self.face.setupUi(self.fWidget)
-        # self.face.father= self.Form
-        # self.face.label_2.setText("哈哈哈")
-        # self.fWidget.show()
         self.fWidget = QtWidgets.QWidget()
         face = cfzWindow.face.Ui_Form()
         face.setupUi(self.fWidget)
