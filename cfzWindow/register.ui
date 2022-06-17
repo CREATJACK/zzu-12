@@ -22,21 +22,21 @@
   <widget class="QStackedWidget" name="stackedWidget">
    <property name="geometry">
     <rect>
-     <x>580</x>
-     <y>140</y>
+     <x>590</x>
+     <y>130</y>
      <width>411</width>
      <height>341</height>
     </rect>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="page">
     <widget class="QPushButton" name="pushButton_4">
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>170</y>
+       <y>180</y>
        <width>93</width>
        <height>28</height>
       </rect>
@@ -53,8 +53,8 @@ border: 1px solid;
     <widget class="QPushButton" name="pushButton_5">
      <property name="geometry">
       <rect>
-       <x>210</x>
-       <y>170</y>
+       <x>200</x>
+       <y>180</y>
        <width>93</width>
        <height>28</height>
       </rect>
@@ -72,7 +72,7 @@ border: 1px solid;
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>130</y>
+       <y>140</y>
        <width>141</width>
        <height>19</height>
       </rect>
@@ -111,7 +111,7 @@ border: 1px solid;
       <item row="1" column="0">
        <widget class="QLabel" name="label_7">
         <property name="text">
-         <string>密码</string>
+         <string>pop授权码</string>
         </property>
        </widget>
       </item>
@@ -161,7 +161,7 @@ border: 1px solid;
       <item row="1" column="0">
        <widget class="QLabel" name="label_5">
         <property name="text">
-         <string>密码</string>
+         <string>pop3授权码</string>
         </property>
        </widget>
       </item>
@@ -207,7 +207,7 @@ border: 1px solid;
 }</string>
      </property>
      <property name="text">
-      <string>登录</string>
+      <string>注册</string>
      </property>
     </widget>
    </widget>
@@ -322,8 +322,8 @@ border: 1px solid;
    <slot>pb8()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>842</x>
-     <y>357</y>
+     <x>852</x>
+     <y>347</y>
     </hint>
     <hint type="destinationlabel">
      <x>879</x>

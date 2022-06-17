@@ -10,13 +10,10 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-import cfzWindow.face
-from core.database import *
-from cfzWindow.main import *
-from cfzWindow.dialog import *
-from face_detect.face_detect import detect
-from PIL import Image, ImageTk
-import cv2
+import cfzWindow
+from cfzWindow.dialog import Ui_Dialog
+from cfzWindow.main import Ui_Main
+from core.database import insertUser, selectUser
 
 
 class Ui_Form(object):
@@ -27,24 +24,24 @@ class Ui_Form(object):
         Form.setWindowTitle("")
         Form.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.stackedWidget = QtWidgets.QStackedWidget(Form)
-        self.stackedWidget.setGeometry(QtCore.QRect(580, 140, 411, 341))
+        self.stackedWidget.setGeometry(QtCore.QRect(590, 130, 411, 341))
         self.stackedWidget.setObjectName("stackedWidget")
         self.page = QtWidgets.QWidget()
         self.page.setObjectName("page")
         self.pushButton_4 = QtWidgets.QPushButton(self.page)
-        self.pushButton_4.setGeometry(QtCore.QRect(0, 170, 93, 28))
+        self.pushButton_4.setGeometry(QtCore.QRect(0, 180, 93, 28))
         self.pushButton_4.setStyleSheet("QPushButton{\n"
-                                        "border: 1px solid;\n"
-                                        "}")
+"border: 1px solid;\n"
+"}")
         self.pushButton_4.setObjectName("pushButton_4")
         self.pushButton_5 = QtWidgets.QPushButton(self.page)
-        self.pushButton_5.setGeometry(QtCore.QRect(210, 170, 93, 28))
+        self.pushButton_5.setGeometry(QtCore.QRect(200, 180, 93, 28))
         self.pushButton_5.setStyleSheet("QPushButton{\n"
-                                        "border: 1px solid;\n"
-                                        "}")
+"border: 1px solid;\n"
+"}")
         self.pushButton_5.setObjectName("pushButton_5")
         self.radioButton = QtWidgets.QRadioButton(self.page)
-        self.radioButton.setGeometry(QtCore.QRect(0, 130, 141, 19))
+        self.radioButton.setGeometry(QtCore.QRect(0, 140, 141, 19))
         self.radioButton.setObjectName("radioButton")
         self.formLayoutWidget = QtWidgets.QWidget(self.page)
         self.formLayoutWidget.setGeometry(QtCore.QRect(0, 50, 301, 65))
@@ -68,12 +65,10 @@ class Ui_Form(object):
         self.stackedWidget.addWidget(self.page)
         self.page_2 = QtWidgets.QWidget()
         self.page_2.setObjectName("page_2")
-        # 扫脸登录
         self.label_3 = QtWidgets.QLabel(self.page_2)
         self.label_3.setGeometry(QtCore.QRect(10, 70, 321, 271))
         self.label_3.setText("")
         self.label_3.setObjectName("label_3")
-
         self.stackedWidget.addWidget(self.page_2)
         self.page_4 = QtWidgets.QWidget()
         self.page_4.setObjectName("page_4")
@@ -100,14 +95,14 @@ class Ui_Form(object):
         self.pushButton_8 = QtWidgets.QPushButton(self.page_4)
         self.pushButton_8.setGeometry(QtCore.QRect(210, 190, 93, 28))
         self.pushButton_8.setStyleSheet("QPushButton{\n"
-                                        "border: 1px solid;\n"
-                                        "}")
+"border: 1px solid;\n"
+"}")
         self.pushButton_8.setObjectName("pushButton_8")
         self.pushButton_6 = QtWidgets.QPushButton(self.page_4)
         self.pushButton_6.setGeometry(QtCore.QRect(10, 190, 93, 28))
         self.pushButton_6.setStyleSheet("QPushButton{\n"
-                                        "border: 1px solid;\n"
-                                        "}")
+"border: 1px solid;\n"
+"}")
         self.pushButton_6.setObjectName("pushButton_6")
         self.stackedWidget.addWidget(self.page_4)
         self.label = QtWidgets.QLabel(Form)
@@ -117,21 +112,21 @@ class Ui_Form(object):
         self.pushButton = QtWidgets.QPushButton(Form)
         self.pushButton.setGeometry(QtCore.QRect(590, 70, 91, 28))
         self.pushButton.setStyleSheet("QPushButton{\n"
-                                      "background-color: rgb(85, 170, 255);\n"
-                                      "border: 1px solid;\n"
-                                      "}")
+"background-color: rgb(85, 170, 255);\n"
+"border: 1px solid;\n"
+"}")
         self.pushButton.setObjectName("pushButton")
         self.pushButton_2 = QtWidgets.QPushButton(Form)
         self.pushButton_2.setGeometry(QtCore.QRect(700, 70, 111, 29))
         self.pushButton_2.setStyleSheet("QPushButton{\n"
-                                        "border: 1px solid;\n"
-                                        "}")
+"border: 1px solid;\n"
+"}")
         self.pushButton_2.setObjectName("pushButton_2")
         self.pushButton_3 = QtWidgets.QPushButton(Form)
         self.pushButton_3.setGeometry(QtCore.QRect(830, 70, 81, 29))
         self.pushButton_3.setStyleSheet("QPushButton{\n"
-                                        "border: 1px solid;\n"
-                                        "}")
+"border: 1px solid;\n"
+"}")
         self.pushButton_3.setObjectName("pushButton_3")
 
         import os
@@ -175,11 +170,11 @@ class Ui_Form(object):
         self.pushButton_5.setText(_translate("Form", "清空"))
         self.radioButton.setText(_translate("Form", "记住用户和密码"))
         self.label_2.setText(_translate("Form", "用户ID"))
-        self.label_7.setText(_translate("Form", "密码"))
+        self.label_7.setText(_translate("Form", "pop授权码"))
         self.label_6.setText(_translate("Form", "用户ID"))
-        self.label_5.setText(_translate("Form", "密码"))
+        self.label_5.setText(_translate("Form", "pop3授权码"))
         self.pushButton_8.setText(_translate("Form", "清空"))
-        self.pushButton_6.setText(_translate("Form", "登录"))
+        self.pushButton_6.setText(_translate("Form", "注册"))
         self.pushButton.setText(_translate("Form", "密码登录"))
         self.pushButton_2.setText(_translate("Form", "人脸识别登录"))
         self.pushButton_3.setText(_translate("Form", "注册"))

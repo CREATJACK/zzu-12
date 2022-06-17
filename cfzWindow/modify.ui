@@ -13,71 +13,40 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QWidget" name="formLayoutWidget">
-   <property name="geometry">
-    <rect>
-     <x>180</x>
-     <y>80</y>
-     <width>531</width>
-     <height>61</height>
-    </rect>
-   </property>
-   <layout class="QFormLayout" name="formLayout">
-    <item row="0" column="0">
-     <widget class="QLabel" name="label_3">
-      <property name="text">
-       <string>密码</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="1">
-     <widget class="QLineEdit" name="lineEdit_3">
-      <property name="echoMode">
-       <enum>QLineEdit::Password</enum>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0">
-     <widget class="QLabel" name="label_4">
-      <property name="text">
-       <string>头像</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="1">
-     <widget class="QPushButton" name="pushButton_2">
-      <property name="text">
-       <string>选择</string>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
-     <x>370</x>
-     <y>440</y>
-     <width>93</width>
-     <height>28</height>
+     <x>560</x>
+     <y>380</y>
+     <width>111</width>
+     <height>51</height>
     </rect>
    </property>
    <property name="text">
     <string>确定</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_5">
+  <widget class="QWidget" name="formLayoutWidget">
    <property name="geometry">
     <rect>
-     <x>390</x>
-     <y>160</y>
-     <width>311</width>
-     <height>251</height>
+     <x>160</x>
+     <y>90</y>
+     <width>541</width>
+     <height>31</height>
     </rect>
    </property>
-   <property name="text">
-    <string/>
-   </property>
+   <layout class="QFormLayout" name="formLayout">
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_2">
+      <property name="text">
+       <string>imap授权码</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="lineEdit_2"/>
+    </item>
+   </layout>
   </widget>
  </widget>
  <resources/>
@@ -89,28 +58,12 @@
    <slot>pB()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>399</x>
-     <y>461</y>
+     <x>589</x>
+     <y>401</y>
     </hint>
     <hint type="destinationlabel">
      <x>367</x>
      <y>517</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pushButton_2</sender>
-   <signal>clicked()</signal>
-   <receiver>Dialog</receiver>
-   <slot>pB2()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>355</x>
-     <y>136</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>212</x>
-     <y>516</y>
     </hint>
    </hints>
   </connection>
