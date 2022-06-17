@@ -17,6 +17,9 @@ from cfzWindow.main import Ui_Main
 
 
 class Ui_Form(object):
+    def __init__(self):
+        self.father = None
+
     def setupUi(self, Form):
         Form.setObjectName("Form")
         Form.resize(823, 559)
@@ -80,6 +83,7 @@ class Ui_Form(object):
         w_ui.label.show()
         cfzWindow.main.show()
         self.Form.close()
+        self.father.close()
 
     # 重试按钮，人脸识别失败时再次进行人脸识别
     def pB3(self):
