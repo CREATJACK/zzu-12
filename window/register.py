@@ -196,22 +196,22 @@ class Ui_Form(object):
         self.face.father= self.Form
         self.face.label_2.setText("哈哈哈")
         self.fWidget.show()
-        my_scan_face = detect(name='')  # 建立人脸识别类，此处还需互斥控制，暂时不做考虑
-        id = my_scan_face.scan_face(self)  # 得到当前人脸特定的id，0为未识别出已录入的人脸
-        if id != 0:
-            scan_name = my_scan_face.id_dict[id]  # 得到对应id的名字
-            print("your namne is :"+scan_name)
-            self.face.label_2.setText("欢迎你："+scan_name)
-            self.w = QtWidgets.QWidget()
-            self.w_ui = Ui_Main()
-            self.w_ui.setupUi(self.w)
-            self.w_ui.label.show()
-            self.w.show()
-            self.Form.close()
-            window.main = self.w
-        else:
-            self.face.label_2.setText("没找到已注册的用户")
-            print("没找到已注册的用户")
+        # my_scan_face = detect(name='')  # 建立人脸识别类，此处还需互斥控制，暂时不做考虑
+        # id = my_scan_face.scan_face(self)  # 得到当前人脸特定的id，0为未识别出已录入的人脸
+        # if id != 0:
+        #     scan_name = my_scan_face.id_dict[id]  # 得到对应id的名字
+        #     print("your namne is :"+scan_name)
+        #     self.face.label_2.setText("欢迎你："+scan_name)
+        #     self.w = QtWidgets.QWidget()
+        #     self.w_ui = Ui_Main()
+        #     self.w_ui.setupUi(self.w)
+        #     self.w_ui.label.show()
+        #     self.w.show()
+        #     self.Form.close()
+        #     window.main = self.w
+        # else:
+        #     self.face.label_2.setText("没找到已注册的用户")
+        #     print("没找到已注册的用户")
 
 
     # 密码登录方式

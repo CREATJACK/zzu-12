@@ -10,10 +10,6 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-import window
-from face_detect.face_detect import detect
-from window.main import Ui_Main
-
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -32,34 +28,35 @@ class Ui_Form(object):
         self.pushButton = QtWidgets.QPushButton(Form)
         self.pushButton.setGeometry(QtCore.QRect(690, 20, 121, 61))
         self.pushButton.setObjectName("pushButton")
+        self.pushButton_2 = QtWidgets.QPushButton(Form)
+        self.pushButton_2.setGeometry(QtCore.QRect(690, 130, 121, 61))
+        self.pushButton_2.setObjectName("pushButton_2")
+        self.pushButton_3 = QtWidgets.QPushButton(Form)
+        self.pushButton_3.setGeometry(QtCore.QRect(690, 240, 121, 61))
+        self.pushButton_3.setObjectName("pushButton_3")
 
-        self.Form = Form
-        Form.pB = self.pB
+        self.pushButton.clicked.connect(self.pB)
+        self.pushButton_2.clicked.connect(self.pB2)
+        self.pushButton_3.clicked.connect(self.pB3)
 
         self.retranslateUi(Form)
-        self.pushButton.clicked.connect(Form.pB)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))
-        self.pushButton.setText(_translate("Form", "重试"))
+        self.pushButton.setText(_translate("Form", "开始识别"))
+        self.pushButton_2.setText(_translate("Form", "确定"))
+        self.pushButton_3.setText(_translate("Form", "重试"))
 
+    # 开始识别按钮
     def pB(self):
-        my_scan_face = detect(name='')  # 建立人脸识别类，此处还需互斥控制，暂时不做考虑
-        id = my_scan_face.scan_face(self)  # 得到当前人脸特定的id，0为未识别出已录入的人脸
-        if id != 0:
-            scan_name = my_scan_face.id_dict[id]  # 得到对应id的名字
-            print("your namne is :"+scan_name)
-            self.label_2.setText("欢迎你："+scan_name)
-            self.w = QtWidgets.QWidget()
-            self.w_ui = Ui_Main()
-            self.w_ui.setupUi(self.w)
-            self.w_ui.label.show()
-            self.w.show()
-            self.Form.father.close()
-            self.Form.close()
-            window.main = self.w
-        else:
-            self.label_2.setText("没找到已注册的用户")
-            print("没找到已注册的用户")
+        print("开始进行人脸识别")
+
+    # 确定按钮，进入主界面:
+    def pB2(self):
+        pass
+
+    # 重试按钮，人脸识别失败时再次进行人脸识别
+    def pB3(self):
+        pass
