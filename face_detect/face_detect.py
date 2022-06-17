@@ -399,7 +399,6 @@ class detect:
         self.Total_face_num += 1
         self.Get_new_face()  # 采集新人脸
         print("采集完毕，开始训练")
-        print("锁被释放0")
 
         self.Train_new_face()  # 训练采集到的新人脸
         self.write_config(self.name)  # 修改配置文件
