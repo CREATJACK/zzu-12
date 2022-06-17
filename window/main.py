@@ -24,7 +24,7 @@ from bs4 import BeautifulSoup
 
 import core.database
 import window
-from window import entryUser, modify
+from window import  modify, enterUser
 
 
 class Ui_Main(object):
@@ -398,10 +398,11 @@ class Ui_Main(object):
 
     # 录入人脸信息槽函数
     def PB5(self):
-        self.dialog = QtWidgets.QDialog()
-        d_ui = entryUser.Ui_Dialog()
-        d_ui.setupUi(self.dialog)
-        self.dialog.show()
+        self.capture = QtWidgets.QWidget()
+        c_ui = enterUser.Ui_Form()
+        c_ui.setupUi(self.capture)
+        self.capture.show()
+
 
     # 发送邮件的接口
     # window.id: 发送者邮箱
