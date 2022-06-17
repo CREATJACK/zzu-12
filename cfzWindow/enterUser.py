@@ -13,7 +13,6 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from face_detect.face_detect import detect
 
 
-
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
@@ -37,12 +36,16 @@ class Ui_Form(object):
         self.pushButton_3.setGeometry(QtCore.QRect(760, 260, 121, 61))
         self.pushButton_3.setObjectName("pushButton_3")
 
+
         self.Form = Form
-        self.pushButton.clicked.connect(self.pB)
-        self.pushButton_2.clicked.connect(self.pB2)
-        self.pushButton_3.clicked.connect(self.pB3)
+        Form.pB = self.pB
+        Form.pB1 = self.pB2
+        Form.pB2 = self.pB3
 
         self.retranslateUi(Form)
+        self.pushButton.clicked.connect(Form.pB)
+        self.pushButton_2.clicked.connect(Form.pB1)
+        self.pushButton_3.clicked.connect(Form.pB2)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def retranslateUi(self, Form):
@@ -54,7 +57,6 @@ class Ui_Form(object):
 
     # 开始录入人脸信息按钮
     def pB(self):
-        print("开始录入人脸信息")
         my_scan_face = detect()
         my_scan_face.load_new_face()    #录入人脸
         self.label.setStyleSheet("background-color: black")

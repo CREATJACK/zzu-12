@@ -83,5 +83,59 @@
   </widget>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>Form</receiver>
+   <slot>pB()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>809</x>
+     <y>61</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>922</x>
+     <y>64</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>Form</receiver>
+   <slot>pB1()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>844</x>
+     <y>188</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>914</x>
+     <y>180</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_3</sender>
+   <signal>clicked()</signal>
+   <receiver>Form</receiver>
+   <slot>pB2()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>838</x>
+     <y>299</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>945</x>
+     <y>296</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>pB()</slot>
+  <slot>pB1()</slot>
+  <slot>pB2()</slot>
+ </slots>
 </ui>
