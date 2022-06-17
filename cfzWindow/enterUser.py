@@ -35,7 +35,7 @@ class Ui_Form(object):
         self.pushButton_3 = QtWidgets.QPushButton(Form)
         self.pushButton_3.setGeometry(QtCore.QRect(760, 260, 121, 61))
         self.pushButton_3.setObjectName("pushButton_3")
-
+        self.my_scan_face = detect(cfzWindow.id)
 
         self.Form = Form
         Form.pB = self.pB
@@ -57,12 +57,13 @@ class Ui_Form(object):
 
     # 开始录入人脸信息按钮
     def pB(self):
-        my_scan_face = detect(cfzWindow.id)
-        my_scan_face.load_new_face(self)    #录入人脸
+        
+        self.my_scan_face.load_new_face(self)    #录入人脸
         self.label.setStyleSheet("background-color: black")
 
     # 确定按钮，退出当前子窗口:
     def pB2(self):
+        self.my_scan_face.bk = True
         self.Form.close()
 
     # 重试按钮，人脸录入失败时再次进行人脸录入

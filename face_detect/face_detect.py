@@ -1,3 +1,4 @@
+import re
 import cv2
 import numpy as np
 import os
@@ -16,7 +17,7 @@ pth_xml = pth
 
 class detect:
     def __init__(self,name) :
-
+        self.bk = False
         pth = os.getcwd()
         pth = os.path.join(pth,"face_detect/")
         print(pth)
@@ -89,6 +90,8 @@ class detect:
         sample_num = 0  # 已经获得的样本数
 
         while True:  # 从摄像头读取图片
+            if self.bk:
+                break
             self.success, self.img = self.camera.read()
 
             # 转为灰度图片
@@ -401,6 +404,8 @@ class detect:
     def load_new_face(self,window = None):
         self.Total_face_num += 1
         self.Get_new_face(window)  # 采集新人脸
+        if self.bk:
+            return 0
         print("采集完毕，开始训练")
 
         self.Train_new_face()  # 训练采集到的新人脸
