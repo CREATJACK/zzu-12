@@ -21,27 +21,26 @@ class Ui_Dialog(object):
         self.pushButton.setGeometry(QtCore.QRect(560, 380, 111, 51))
         self.pushButton.setObjectName("pushButton")
         self.formLayoutWidget = QtWidgets.QWidget(Dialog)
-        self.formLayoutWidget.setGeometry(QtCore.QRect(160, 90, 541, 61))
+        self.formLayoutWidget.setGeometry(QtCore.QRect(170, 70, 541, 57))
         self.formLayoutWidget.setObjectName("formLayoutWidget")
         self.formLayout = QtWidgets.QFormLayout(self.formLayoutWidget)
         self.formLayout.setContentsMargins(0, 0, 0, 0)
         self.formLayout.setObjectName("formLayout")
-        self.label = QtWidgets.QLabel(self.formLayoutWidget)
-        self.label.setObjectName("label")
-        self.formLayout.setWidget(0, QtWidgets.QFormLayout.LabelRole, self.label)
-        self.lineEdit = QtWidgets.QLineEdit(self.formLayoutWidget)
-        self.lineEdit.setObjectName("lineEdit")
-        self.formLayout.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.lineEdit)
         self.label_2 = QtWidgets.QLabel(self.formLayoutWidget)
         self.label_2.setObjectName("label_2")
         self.formLayout.setWidget(1, QtWidgets.QFormLayout.LabelRole, self.label_2)
         self.lineEdit_2 = QtWidgets.QLineEdit(self.formLayoutWidget)
         self.lineEdit_2.setObjectName("lineEdit_2")
         self.formLayout.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.lineEdit_2)
+        self.label = QtWidgets.QLabel(self.formLayoutWidget)
+        self.label.setObjectName("label")
+        self.formLayout.setWidget(0, QtWidgets.QFormLayout.LabelRole, self.label)
+        self.lineEdit = QtWidgets.QLineEdit(self.formLayoutWidget)
+        self.lineEdit.setObjectName("lineEdit")
+        self.formLayout.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.lineEdit)
 
-        self.Dialog=Dialog
+        self.Dialog = Dialog
         Dialog.pB = self.pB
-
         self.retranslateUi(Dialog)
         self.pushButton.clicked.connect(Dialog.pB)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
@@ -50,15 +49,11 @@ class Ui_Dialog(object):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
         self.pushButton.setText(_translate("Dialog", "确定"))
-        self.label.setText(_translate("Dialog", "pop3授权码"))
         self.label_2.setText(_translate("Dialog", "imap授权码"))
+        self.label.setText(_translate("Dialog", "pop3授权码"))
 
     def pB(self):
         pop3 = self.lineEdit.text()
         imap = self.lineEdit_2.text()
-        core.database.setImap(pop3, imap)
-        QtWidgets.QMessageBox.information(self.Dialog,
-                                          "",
-                                          "修改成功",
-                                          QtWidgets.QMessageBox.Yes)
-
+        core.database.setPop3andImap(pop3, imap)
+        self.Dialog.close()

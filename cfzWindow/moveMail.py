@@ -14,7 +14,7 @@ class EmailUtil:
     host = 'imap.qq.com'  # 主机IP或者域名
     port = '993'  # 端口
     username = cfzWindow.id  # 用户名
-    password = cfzWindow.password  # 密码或授权码
+    password = cfzWindow.imap  # 密码或授权码
     imap = None  # 邮箱连接对象
 
     # 查看了一下qq邮箱的，由输出结果可得,包含的文件夹有：
@@ -134,7 +134,7 @@ class EmailUtil:
         self.mailbox.folder.set('Junk')
         for fileName in fileNames:
             # 远程
-            date = self.date_by_fileName(fileName, "bad")
+            date = self.date_by_fileName(fileName)
             for it in self.mailbox.fetch():
                 if date == it.date_str:
                     uid = it.uid

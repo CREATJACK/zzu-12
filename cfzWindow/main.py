@@ -32,8 +32,8 @@ class Ui_Main(object):
     def __init__(self):
         self.good = []
         self.bad = []
-        self.emailUtil = EmailUtil('imap.qq.com', '993')
-        self.emailUtil.login(cfzWindow.id, 'fduxnixyebocbgaf')
+        # self.emailUtil = EmailUtil('imap.qq.com', '993')
+        # self.emailUtil.login(cfzWindow.id, 'fduxnixyebocbgaf')
 
 
     def setupUi(self, Main):
@@ -258,6 +258,7 @@ class Ui_Main(object):
                                          "QPushButton::pressed{ background: #3C79F2; border-color: #11505C; font-weight: bold; font-family:Microsoft YaHei; }")
         self.pushButton_11.setObjectName("pushButton_11")
 
+
         self.Main = Main
         face = QtGui.QPixmap("./personal/face.png")
         self.label.setPixmap(face)
@@ -305,7 +306,6 @@ class Ui_Main(object):
         # 初始化self.good和self.bad
         self.initGood()
         self.initBad()
-
 
         self.retranslateUi(Main)
         self.stackedWidget.setCurrentIndex(1)
@@ -472,7 +472,7 @@ class Ui_Main(object):
         # 收取前先重置self.good和self.bad
         self.good=[]
         self.bad=[]
-        print("手动收取")
+        print("----------手动收取----------")
         goodPath = './file/email/'+cfzWindow.id+"/good/"
         badPath = './file/email/'+cfzWindow.id+'/bad/'
         goodList = os.listdir(goodPath)
@@ -523,7 +523,7 @@ class Ui_Main(object):
         for e in badList:
             os.remove(badPath + e)
         user = cfzWindow.id
-        password = cfzWindow.password
+        password = cfzWindow.pop3
         pop3_server = 'pop.qq.com'
         # 连接到POP3服务器
         server = poplib.POP3(pop3_server)

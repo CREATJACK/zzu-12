@@ -50,6 +50,7 @@ def getInformation():
         return None
     return result[0]
 
+
 # 获取用户的密码
 def getPassword():
     sql = "select pop3, imap from user where id='{}'".format(cfzWindow.id)
@@ -59,7 +60,24 @@ def getPassword():
         return None
     return result[0][0]
 
+
 # 设置用户的imap授权码
-def setImap(imap):
-    sql = "update user set imap='{}' where id= '{}'".format(imap, cfzWindow.id)
-    cursor.execute(sql)
+def setPop3andImap(pop3, imap):
+    print(pop3, imap, cfzWindow.id)
+    if pop3 == '' and imap == '':
+        return
+    if pop3 != '' and imap != '':
+        sql = "update user set pop3='{}', imap='{}' where id= '{}'".format(pop3, imap, cfzWindow.id)
+        cursor.execute(sql)
+        con.commit()
+        return
+    if pop3 != '' and imap == '':
+        sql = "update user set pop3='{}' where id= '{}'".format(pop3, cfzWindow.id)
+        cursor.execute(sql)
+        con.commit()
+        return
+    if pop3 == '' and imap != '':
+        sql = "update user set imap='{}' where id= '{}'".format(imap, cfzWindow.id)
+        cursor.execute(sql)
+        con.commit()
+        return
