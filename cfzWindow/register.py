@@ -12,6 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 import cfzWindow
 import cfzWindow.face
+import core.database
 from cfzWindow.dialog import Ui_Dialog
 from cfzWindow.main import Ui_Main
 from core.database import insertUser, selectUser
@@ -227,6 +228,8 @@ class Ui_Form(object):
         else:
             cfzWindow.id = id
             cfzWindow.pop3 = password
+            x = core.database.getPassword()
+            cfzWindow.imap = x[1]
             if self.radioButton.isChecked():
                 file = open("./personal/individual.txt", 'w')
                 file.write(self.lineEdit_4.text())

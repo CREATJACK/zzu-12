@@ -11,7 +11,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 import cfzWindow
-import core
+import core.database
 from cfzWindow.main import Ui_Main
 from face_detect.face_detect import detect
 
@@ -60,7 +60,6 @@ class Ui_Form(object):
         self.pushButton_2.setText(_translate("Form", "确定"))
         self.pushButton_3.setText(_translate("Form", "重试"))
 
-
     # 开始识别按钮
     def pB(self):
         print("开始进行人脸识别")
@@ -68,22 +67,23 @@ class Ui_Form(object):
         id = my_scan_face.scan_face(self)  # 得到当前人脸特定的id，0为未识别出已录入的人脸
         if id != 0:
             self.scan_name = my_scan_face.id_dict[id]  # 得到对应id的名字
-            print("your namne is :"+self.scan_name)
-            self.label_2.setText("欢迎你："+self.scan_name+",请点击确认继续")
+            print("your namne is :" + self.scan_name)
+            self.label_2.setText("欢迎你：" + self.scan_name + ",请点击确认继续")
         else:
             self.scan_name = None
             self.label_2.setText("没找到已注册的用户")
             print("没找到已注册的用户")
             self.label_2.setText("请点击确认退出，或点击重试以重新扫描人脸")
 
-
     # 确定按钮，进入主界面:
     def pB2(self):
-        if self.scan_name == None:
+        if self.scan_name is None:
             self.Form.close()
             return 0
         cfzWindow.id = self.scan_name
-        cfzWindow.password = core.database.getPassword()
+        x = core.database.getPassword()
+        cfzWindow.pop3 = x[0]
+        cfzWindow.imap = x[1]
         cfzWindow.main = QtWidgets.QWidget()
         w_ui = Ui_Main()
         w_ui.setupUi(cfzWindow.main)

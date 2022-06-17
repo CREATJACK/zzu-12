@@ -58,7 +58,7 @@ def getPassword():
     result = cursor.fetchall()
     if result == ():
         return None
-    return result[0][0]
+    return result[0]
 
 
 # 设置用户的imap授权码

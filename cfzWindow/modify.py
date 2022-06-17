@@ -10,6 +10,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+import cfzWindow
 import core.database
 
 
@@ -55,5 +56,6 @@ class Ui_Dialog(object):
     def pB(self):
         pop3 = self.lineEdit.text()
         imap = self.lineEdit_2.text()
+        cfzWindow.imap = imap
         core.database.setPop3andImap(pop3, imap)
         self.Dialog.close()
