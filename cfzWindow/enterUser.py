@@ -11,7 +11,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 from face_detect.face_detect import detect
-
+import cfzWindow 
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -57,8 +57,8 @@ class Ui_Form(object):
 
     # 开始录入人脸信息按钮
     def pB(self):
-        my_scan_face = detect()
-        my_scan_face.load_new_face()    #录入人脸
+        my_scan_face = detect(cfzWindow.id)
+        my_scan_face.load_new_face(self)    #录入人脸
         self.label.setStyleSheet("background-color: black")
 
     # 确定按钮，退出当前子窗口:

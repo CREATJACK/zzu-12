@@ -75,7 +75,7 @@ class detect:
 
         ##以上是关于界面的设计
 
-    def Get_new_face(self):
+    def Get_new_face(self,window = None):
         print("正在从摄像头录入新人脸信息 \n")
 
         # 存在目录data就清空，不存在就创建，确保最后存在空的data目录
@@ -113,17 +113,20 @@ class detect:
                 cv2.imwrite(pth+"data/User." + str(T) + '.' + str(sample_num) + '.jpg', gray[y:y + h, x:x + w])
 
             pictur_num = 30  # 表示摄像头拍摄取样的数量,越多效果越好，但获取以及训练的越慢
-
+            img2 = cv2.cvtColor(self.img,cv2.COLOR_BGR2RGB)
+            _image = QtGui.QImage(img2[:], img2.shape[1], img2.shape[0], img2.shape[1] * 3, QtGui.QImage.Format_RGB888) #pyqt5转换成自己能放的图片格式
+            jpg_out = QtGui.QPixmap(_image).scaled(window.label_2.width(), window.label_2.height()) #设置图片大小
+            window.label_2.setPixmap(jpg_out)
             cv2.waitKey(1)
             if sample_num > pictur_num:
                 break
-            else:  # 控制台内输出进度条
-                l = int(sample_num / pictur_num * 50)
-                r = int((pictur_num - sample_num) / pictur_num * 50)
-                print("\r" + "%{:.1f}".format(sample_num / pictur_num * 100) + "=" * l + "->" + "_" * r, end="")
-                self.var.set("%{:.1f}".format(sample_num / pictur_num * 100))  # 控件可视化进度信息
-                # tk.Tk().update()
-                self.window.update()  # 刷新控件以实时显示进度
+            # else:  # 控制台内输出进度条
+            #     l = int(sample_num / pictur_num * 50)
+            #     r = int((pictur_num - sample_num) / pictur_num * 50)
+            #     print("\r" + "%{:.1f}".format(sample_num / pictur_num * 100) + "=" * l + "->" + "_" * r, end="")
+            #     self.var.set("%{:.1f}".format(sample_num / pictur_num * 100))  # 控件可视化进度信息
+            #     # tk.Tk().update()
+            #     self.window.update()  # 刷新控件以实时显示进度
 
 
     def Train_new_face(self):
@@ -395,9 +398,9 @@ class detect:
             imgtk = ImageTk.PhotoImage(image=current_image)
             return imgtk
 
-    def load_new_face(self):
+    def load_new_face(self,window = None):
         self.Total_face_num += 1
-        self.Get_new_face()  # 采集新人脸
+        self.Get_new_face(window)  # 采集新人脸
         print("采集完毕，开始训练")
 
         self.Train_new_face()  # 训练采集到的新人脸
