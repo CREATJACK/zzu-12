@@ -57,11 +57,9 @@ class Ui_Form(object):
 
     # 开始录入人脸信息按钮
     def pB(self):
-        
         self.my_scan_face.load_new_face(self)    #录入人脸
-        # self.label.setStyleSheet("background-color: black")
-        self.label.selectedText("录入成功，请点击确认")
-
+        self.label.setText("录入成功，请点击确认")
+        print("运行到了这里")
     # 确定按钮，退出当前子窗口:
     def pB2(self):
         self.my_scan_face.bk = True

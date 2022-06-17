@@ -14,7 +14,7 @@ class EmailUtil:
     host = 'imap.qq.com'  # 主机IP或者域名
     port = '993'  # 端口
     username = cfzWindow.id  # 用户名
-    password = cfzWindow.imap  # 密码或授权码
+    password = cfzWindow.imap  # imap授权码
     imap = None  # 邮箱连接对象
 
     # 查看了一下qq邮箱的，由输出结果可得,包含的文件夹有：
@@ -68,10 +68,7 @@ class EmailUtil:
     # 示例dates=['2022-06-14 09:47:56+08:00', '2022-06-14 09:48:06+08:00']
     def movetoINBOX(self, filePath):
         # 切换工作文件夹
-        print("运行到了这里")
         self.mailbox.folder.set('Junk')
-        print("运行到了这里")
-        print(filePath)
         date = self.date_by_fileName(filePath)
         print(date)
         for it in self.mailbox.fetch():

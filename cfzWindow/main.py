@@ -33,8 +33,8 @@ class Ui_Main(object):
     def __init__(self):
         self.good = []
         self.bad = []
-        # self.emailUtil = EmailUtil('imap.qq.com', '993')
-        # self.emailUtil.login(cfzWindow.id, 'fduxnixyebocbgaf')
+        self.emailUtil = EmailUtil('imap.qq.com', '993')
+        self.emailUtil.login(cfzWindow.id, cfzWindow.imap)
 
 
     def setupUi(self, Main):
@@ -445,7 +445,7 @@ class Ui_Main(object):
     def PB7(self):
         tempPath, tempName = os.path.split(cfzWindow.currentFile)
         # qq邮箱服务器端移动
-        self.emailUtil.movetoJunk(cfzWindow.currentFile)
+        # self.emailUtil.movetoJunk(cfzWindow.currentFile)
         # 本地移动
         shutil.move(cfzWindow.currentFile, './file/email/' + cfzWindow.id + "/bad/" + tempName)
         QtWidgets.QMessageBox.information(self.Main,
@@ -460,7 +460,7 @@ class Ui_Main(object):
     def PB9(self):
         tempPath, tempName = os.path.split(cfzWindow.currentFile)
         # qq邮箱服务器端移动
-        self.emailUtil.movetoINBOX(cfzWindow.currentFile)
+       # self.emailUtil.movetoINBOX(cfzWindow.currentFile)
         # 本地移动
         shutil.move(cfzWindow.currentFile, './file/email/' + cfzWindow.id + "/good/" + tempName)
         QtWidgets.QMessageBox.information(self.Main,
