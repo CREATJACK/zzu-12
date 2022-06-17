@@ -430,7 +430,7 @@ class Ui_Main(object):
             smtp_server = "smtp.qq.com"
             server = smtplib.SMTP_SSL(smtp_server)
             server.connect(smtp_server, 465)
-            server.login(cfzWindow.id, cfzWindow.password)
+            server.login(cfzWindow.id, cfzWindow.pop3)
             server.sendmail(cfzWindow.id, self.lineEdit.text(), msg.as_string())
             print("邮件发送成功")
         except smtplib.SMTPException as e:
