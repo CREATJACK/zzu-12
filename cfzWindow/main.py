@@ -441,6 +441,10 @@ class Ui_Main(object):
         finally:
             # 关闭服务器
             server.quit()
+        QtWidgets.QMessageBox.information(self.Main,
+                                          "",
+                                          "发送成功",
+                                          QtWidgets.QMessageBox.Yes)
 
     def PB7(self):
         tempPath, tempName = os.path.split(cfzWindow.currentFile)
