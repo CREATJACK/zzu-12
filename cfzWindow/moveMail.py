@@ -98,9 +98,9 @@ class EmailUtil:
     # 读取fileName文件中的第一行，即发送时间，fileName文件名，dir：good正常邮件，bad垃圾邮件
     def date_by_fileName(self, fileName, dir):
         if dir == "good":
-            filePath = "./file/email/" + cfzWindow.id+"/"+ fileName
+            filePath = "./file/email/" + cfzWindow.id+"/good/"+ fileName
         else:
-            filePath = "./file/email/" + cfzWindow.id + "/" + fileName
+            filePath = "./file/email/" + cfzWindow.id + "/bad/" + fileName
         f = open(filePath, "r", encoding='utf-8')
         lines = f.readlines()
         res = lines[0].replace("\n", "")
