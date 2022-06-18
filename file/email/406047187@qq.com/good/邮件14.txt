@@ -1,0 +1,19 @@
+Thu, 2 Jun 2022 06:18:17 +0000
+From: Inkdrop <contact@inkdrop.app>
+To:  <406047187@qq.com>
+主题: Welcome to Inkdrop
+Text:   Hello, Cheng.
+  Welcome to Inkdrop, the cross-platform Markdown note-taking app!
+  In order to start using the app, please activate your account by clicking the link below:
+https://api.inkdrop.app/v1/account/_verify?uid=3c9e9f7441438a3b99902a15a2926127&token=85ec2fcd6795592fd6be24b64d9fffe7&signup=1&ts=1654150697
+  Enjoy!
+Cheers from Inkdrop,
+  — Takuya Matsuyama
+Website | 
+    Twitter | 
+    Blog | 
+    User forum | 
+    Documentations | 
+    Privacy Policy
+      1-34-2-1605, Shimmachi, Nishi, Osaka, Osaka 550-0013, Japan
+    Need help? Please just hit the reply button to contact me.

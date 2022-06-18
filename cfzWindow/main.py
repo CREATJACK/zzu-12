@@ -673,11 +673,12 @@ class Ui_Main(object):
             if result == 1:
                 shutil.move(filePath + x, filePath + "good/" + x)
             else:
-                if cfzWindow.imap == None or cfzWindow.imap == '':
+                if cfzWindow.imap is None or cfzWindow.imap == '':
                     shutil.move(filePath + x, filePath + "bad/" + x)
                     print("收取本地后不再同步远程")
                 else:
                     shutil.move(filePath + x, filePath + "good/" + x)
+                    print("运行到了这里")
                     self.emailUtil.movetoJunk(x)  # 远程和本地的移动都实现了
                     print("收取识别本地和远程同步")
 

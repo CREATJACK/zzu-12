@@ -1,0 +1,16 @@
+Fri, 20 May 2022 11:41:28 -0400
+From: MATLAB CENTRAL <matlab-central@mathworks.com>
+To:  <406047187@qq.com>
+主题: Activity on followed file "MATLAB Support for MinGW-w64 C/C++
+ Compiler"
+Text: Giorgio Bisceglie commented on the file MATLAB Support for MinGW-w64 C/C++ Compiler
+Giorgio Bisceglie commented on the file MATLAB Support for MinGW-w64 C/C++ Compiler ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌
+Giorgio Bisceglie commented on the file MATLAB Support for MinGW-w64 C/C++ Compiler
+                                                    New commentGiorgio Bisceglie commented on the file MATLAB Support for MinGW-w64 C/C++ Compiler
+The default compiler, LCC, is not supported for XCP communication. For information about compiler support, see https://www.mathworks.com/support/compilers/current_release
+How can I solve this issue?
+Thank you in advance
+View Comment
+Manage subscriptions | Notification settings
+© 2022 The MathWorks, Inc. MATLAB and Simulink are registered trademarks of The MathWorks, Inc. See a list of additional trademarks.  Other product or brand names may be trademarks or registered trademarks of their respective holders. 
+The MathWorks, Inc. - 3 Apple Hill Drive, Natick, MA 01760 +1 508-647-7000

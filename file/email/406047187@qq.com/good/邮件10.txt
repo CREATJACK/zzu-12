@@ -1,0 +1,12 @@
+Thu, 09 Jun 2022 11:19:32 +0000 (UTC)
+From: GitHub <noreply@github.com>
+To: S.l <406047187@qq.com>
+主题: [GitHub] A third-party OAuth application has been added to your
+ account
+Text: Hey S3668!
+A third-party OAuth application (JetBrains IDE Integration) with gist, read:org, repo, and workflow scopes was recently authorized to access your account.
+Visit https://github.com/settings/connections/applications/58566862bd2a5ff748fb for more information.
+To see this and other security events for your account, visit https://github.com/settings/security-log
+If you run into problems, please contact support by visiting https://github.com/contact
+Thanks,
+The GitHub Team
