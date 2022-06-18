@@ -230,6 +230,7 @@ class Ui_Form(object):
             cfzWindow.pop3 = password
             x = core.database.getPassword()
             cfzWindow.imap = x[1]
+            print(cfzWindow.id, cfzWindow.pop3, cfzWindow.imap)
             if self.radioButton.isChecked():
                 file = open("./personal/individual.txt", 'w')
                 file.write(self.lineEdit_4.text())

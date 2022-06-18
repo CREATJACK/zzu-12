@@ -25,7 +25,7 @@ from bs4 import BeautifulSoup
 
 import core.database
 import cfzWindow
-from cfzWindow import  modify, enterUser
+from cfzWindow import modify, enterUser
 from cfzWindow.moveMail import EmailUtil
 
 
@@ -34,8 +34,11 @@ class Ui_Main(object):
         self.good = []
         self.bad = []
         self.emailUtil = EmailUtil('imap.qq.com', '993')
-        self.emailUtil.login(cfzWindow.id, cfzWindow.imap)
-
+        if cfzWindow.imap == None or cfzWindow.imap == '':
+            print("imap未授权，只进行本地操作！")
+        else:
+            self.emailUtil.login(cfzWindow.id, cfzWindow.imap)
+            print("impa连接成功，操作远程同步")
 
     def setupUi(self, Main):
         Main.setObjectName("Main")
@@ -259,7 +262,6 @@ class Ui_Main(object):
                                          "QPushButton::pressed{ background: #3C79F2; border-color: #11505C; font-weight: bold; font-family:Microsoft YaHei; }")
         self.pushButton_11.setObjectName("pushButton_11")
 
-
         self.Main = Main
         face = QtGui.QPixmap("./personal/face.png")
         self.label.setPixmap(face)
@@ -282,10 +284,10 @@ class Ui_Main(object):
         # 如果存放邮件的目录不存在，先建立目录
         if not os.path.exists('./file/email/' + cfzWindow.id):
             os.mkdir('./file/email/' + cfzWindow.id)
-        if not os.path.exists('./file/email/'+cfzWindow.id+'/good/'):
-            os.mkdir('./file/email/'+cfzWindow.id+'/good/')
-        if not os.path.exists('./file/email/'+cfzWindow.id+'/bad/'):
-            os.mkdir('./file/email/'+cfzWindow.id+'/bad/')
+        if not os.path.exists('./file/email/' + cfzWindow.id + '/good/'):
+            os.mkdir('./file/email/' + cfzWindow.id + '/good/')
+        if not os.path.exists('./file/email/' + cfzWindow.id + '/bad/'):
+            os.mkdir('./file/email/' + cfzWindow.id + '/bad/')
 
         # 判断距离上次读取的间隔是否大于12小时
         if os.path.exists('./personal/last.txt'):
@@ -372,7 +374,7 @@ class Ui_Main(object):
 
     # 收件箱槽函数
     def PB2(self):
-        print("显示收件箱")#调试信息
+        print("显示收件箱")  # 调试信息
         self.initGood()
         self.stackedWidget.setCurrentIndex(0)
         # 加载前先删除上一次列出的数据
@@ -389,7 +391,7 @@ class Ui_Main(object):
 
     # 垃圾箱槽函数
     def PB3(self):
-        print("显示垃圾箱")#调试信息
+        print("显示垃圾箱")  # 调试信息
         self.initBad()
         self.stackedWidget.setCurrentIndex(1)
         # 加载前先删除上一次列出的数据
@@ -414,7 +416,6 @@ class Ui_Main(object):
         c_ui = enterUser.Ui_Form()
         c_ui.setupUi(self.capture)
         self.capture.show()
-
 
     # 发送邮件的接口
     # cfzWindow.id: 发送者邮箱
@@ -452,12 +453,17 @@ class Ui_Main(object):
         # qq邮箱服务器端移动
         # self.emailUtil.movetoJunk(cfzWindow.currentFile)
         # 本地移动
-        shutil.move(cfzWindow.currentFile, './file/email/' + cfzWindow.id + "/bad/" + tempName)
+        if cfzWindow.imap == None:
+            shutil.move(cfzWindow.currentFile, './file/email/' + cfzWindow.id + "/bad/" + tempName)
+            print("只移动本地:收件箱——》垃圾箱！")
+        else:
+            self.emailUtil.movetoJunk(tempName)
+            print("本地和远程同步：收件箱——》垃圾箱")
+
         QtWidgets.QMessageBox.information(self.Main,
                                           "",
                                           "移动成功",
                                           QtWidgets.QMessageBox.Yes)
-
 
     def PB8(self):
         self.PB2()
@@ -465,9 +471,16 @@ class Ui_Main(object):
     def PB9(self):
         tempPath, tempName = os.path.split(cfzWindow.currentFile)
         # qq邮箱服务器端移动
-       # self.emailUtil.movetoINBOX(cfzWindow.currentFile)
+        # self.emailUtil.movetoINBOX(cfzWindow.currentFile)
         # 本地移动
-        shutil.move(cfzWindow.currentFile, './file/email/' + cfzWindow.id + "/good/" + tempName)
+
+        if cfzWindow.imap == None:
+            shutil.move(cfzWindow.currentFile, './file/email/' + cfzWindow.id + "/good/" + tempName)
+            print("只移动本地:垃圾箱——》收件箱！")
+        else:
+            self.emailUtil.movetoINBOX(tempName)
+            print("本地和远程同步：垃圾箱——》收件箱")
+
         QtWidgets.QMessageBox.information(self.Main,
                                           "",
                                           "移动成功",
@@ -478,31 +491,26 @@ class Ui_Main(object):
 
     def PB11(self):
         # 收取前先重置self.good和self.bad
-        self.good=[]
-        self.bad=[]
+        self.good = []
+        self.bad = []
         print("----------手动收取----------")
-        goodPath = './file/email/'+cfzWindow.id+"/good/"
-        badPath = './file/email/'+cfzWindow.id+'/bad/'
+        goodPath = './file/email/' + cfzWindow.id + "/good/"
+        badPath = './file/email/' + cfzWindow.id + '/bad/'
         goodList = os.listdir(goodPath)
         badList = os.listdir(badPath)
         for e in goodList:
-            os.remove(goodPath+e)
+            os.remove(goodPath + e)
         for e in badList:
-            os.remove(badPath+e)
-
+            os.remove(badPath + e)
         p = threading.Thread(target=self.handle_email_tread)
         p.setDaemon(True)
         p.start()
-
-        # # 重新收取邮件
-        # self.getEmail()
-        # # 进行垃圾邮件识别
-        # self.handleEmails()
 
     def handle_email_tread(self):
         self.getEmail()
         # 进行垃圾邮件识别
         self.handleEmails()
+        print('----------识别完成----------')
 
     # 初始化self.good
     def initGood(self):
@@ -665,7 +673,13 @@ class Ui_Main(object):
             if result == 1:
                 shutil.move(filePath + x, filePath + "good/" + x)
             else:
-                shutil.move(filePath + x, filePath + "bad/" + x)
+                if cfzWindow.imap == None or cfzWindow.imap == '':
+                    shutil.move(filePath + x, filePath + "bad/" + x)
+                    print("收取本地后不再同步远程")
+                else:
+                    shutil.move(filePath + x, filePath + "good/" + x)
+                    self.emailUtil.movetoJunk(x)  # 远程和本地的移动都实现了
+                    print("收取识别本地和远程同步")
 
     # 垃圾邮件识别 path是待识别文件的路径 返回-1代表是垃圾邮件，返回1代表是正常邮件
     def judgeEmail(self, path):
