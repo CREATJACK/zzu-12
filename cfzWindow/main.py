@@ -619,7 +619,7 @@ class Ui_Main(object):
                 content = msg.get_payload(decode=True)
                 charset = self.guess_charset(msg)
                 if charset:
-                    content = content.decode(charset)
+                    content = content.decode(charset, 'ignore')
                 if "".join([s for s in content.splitlines(True) if s.strip()]):
                     file.write('Text: %s' % ("".join([s for s in content.splitlines(True) if s.strip()])))
             elif content_type == 'text/html':
