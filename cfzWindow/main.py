@@ -678,7 +678,6 @@ class Ui_Main(object):
                     print("收取本地后不再同步远程")
                 else:
                     shutil.move(filePath + x, filePath + "good/" + x)
-                    print("运行到了这里")
                     self.emailUtil.movetoJunk(x)  # 远程和本地的移动都实现了
                     print("收取识别本地和远程同步")
 

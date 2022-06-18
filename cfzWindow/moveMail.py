@@ -55,17 +55,19 @@ class EmailUtil:
         # 切换工作文件夹
         self.mailbox.folder.set('INBOX')
         date = self.date_by_fileName(fileName, "good")
+        print(date)
+        print(fileName)
         for it in self.mailbox.fetch():
             if date == it.date_str:  # (str)(it.date)形式示例：2022-06-14 09:48:06+08:00
                 uid = it.uid  # 获取该邮件的uid
                 # MOVE操作：将当前选择的邮件移动到指定文件夹中
                 self.mailbox.move(uid, 'Junk')  # 根据邮件参数uid进行移动
-
+                print("运行到了这里")
                 # 本地操作
                 src = "./file/email/" + cfzWindow.id + "/good/" + fileName
                 dst = "./file/email/" + cfzWindow.id + "/bad/" + fileName
                 shutil.move(src, dst)  # 移动到bad目录
-
+                print("运行到了这里")
                 # 结束
                 break
 
@@ -96,9 +98,9 @@ class EmailUtil:
     # 读取fileName文件中的第一行，即发送时间，fileName文件名，dir：good正常邮件，bad垃圾邮件
     def date_by_fileName(self, fileName, dir):
         if dir == "good":
-            filePath = "./file/email/" + cfzWindow.id+"/good/"+ fileName
+            filePath = "./file/email/" + cfzWindow.id+"/"+ fileName
         else:
-            filePath = "./file/email/" + cfzWindow.id + "/bad/" + fileName
+            filePath = "./file/email/" + cfzWindow.id + "/" + fileName
         f = open(filePath, "r", encoding='utf-8')
         lines = f.readlines()
         res = lines[0].replace("\n", "")
